@@ -16,7 +16,7 @@ function initNavigation() {
   const toggle = document.getElementById('nav-toggle');
   const menu = document.getElementById('nav-menu');
   const overlay = document.getElementById('nav-overlay');
-  const navLinks = menu ? menu.querySelectorAll('.nav__link') : [];
+  const navLinks = menu ? menu.querySelectorAll('a') : [];
 
   if (!toggle || !menu) return;
 
