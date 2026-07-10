@@ -1,40 +1,24 @@
-/* ==========================================================================
-   H2 MECANIC CORP — Contact Page Styles
-   ========================================================================== */
-
-/* ══════════════════════════════════════════════════════════════════════════
-   CONTACT LAYOUT
-   ══════════════════════════════════════════════════════════════════════════ */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
   gap: var(--space-2xl);
   align-items: start;
 }
-
 @media (max-width: 900px) {
   .contact-grid {
     grid-template-columns: 1fr;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════════════════════════
-   CONTACT INFO COLUMN
-   ══════════════════════════════════════════════════════════════════════════ */
 .contact-info {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
 }
-
-/* Info items */
 .contact-info__item {
   display: flex;
   align-items: flex-start;
   gap: var(--space-md);
 }
-
 .contact-info__icon {
   flex-shrink: 0;
   width: 44px;
@@ -47,12 +31,10 @@
   justify-content: center;
   margin-top: 2px;
 }
-
 .contact-info__icon svg {
   width: 20px;
   height: 20px;
 }
-
 .contact-info__label {
   font-family: var(--font-heading);
   font-size: var(--fs-xs);
@@ -62,60 +44,46 @@
   color: var(--color-primary-red);
   margin-bottom: var(--space-2xs);
 }
-
 .contact-info__text {
   font-size: var(--fs-base);
   color: var(--color-text-secondary);
   line-height: var(--lh-relaxed);
 }
-
 .contact-info__text a {
   color: var(--color-charcoal);
   font-weight: var(--fw-medium);
   transition: var(--transition-colors);
 }
-
 .contact-info__text a:hover {
   color: var(--color-primary-red);
 }
-
-/* Hours table */
 .contact-hours {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--fs-sm);
 }
-
 .contact-hours tr {
   border-bottom: 1px solid var(--color-border-light);
 }
-
 .contact-hours tr:last-child {
   border-bottom: none;
 }
-
 .contact-hours td {
   padding: var(--space-xs) 0;
   color: var(--color-text-secondary);
 }
-
 .contact-hours td:last-child {
   text-align: right;
   font-weight: var(--fw-medium);
   color: var(--color-charcoal);
 }
-
 .contact-hours__open {
   color: var(--color-primary-red) !important;
   font-weight: var(--fw-semibold) !important;
 }
-
-/* Directions button */
 .contact-info__actions {
   padding-top: var(--space-xs);
 }
-
-/* Map */
 .contact-map {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -123,24 +91,17 @@
   box-shadow: var(--shadow-sm);
   margin-top: var(--space-sm);
 }
-
 .contact-map iframe {
   display: block;
   width: 100%;
   height: 280px;
   border: 0;
 }
-
 @media (max-width: 900px) {
   .contact-map iframe {
     height: 240px;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════════════════════════
-   CONTACT FORM
-   ══════════════════════════════════════════════════════════════════════════ */
 .contact-form-card {
   background-color: var(--color-white);
   border-radius: var(--radius-lg);
@@ -148,7 +109,6 @@
   border: 1px solid var(--color-border-light);
   box-shadow: var(--shadow-md);
 }
-
 .contact-form-card__title {
   font-family: var(--font-heading);
   font-size: var(--fs-xl);
@@ -158,32 +118,25 @@
   color: var(--color-charcoal);
   margin-bottom: var(--space-2xs);
 }
-
 .contact-form-card__subtitle {
   font-size: var(--fs-sm);
   color: var(--color-text-secondary);
   margin-bottom: var(--space-xl);
   line-height: var(--lh-normal);
 }
-
-/* Form layout */
 .contact-form__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-md);
 }
-
 @media (max-width: 600px) {
   .contact-form__row {
     grid-template-columns: 1fr;
   }
 }
-
-/* Field group */
 .form-group {
   margin-bottom: var(--space-md);
 }
-
 .form-group__label {
   display: block;
   font-family: var(--font-heading);
@@ -194,12 +147,10 @@
   color: var(--color-charcoal);
   margin-bottom: var(--space-xs);
 }
-
 .form-group__label .form-required {
   color: var(--color-primary-red);
   margin-left: 2px;
 }
-
 .form-group__hint {
   display: block;
   font-size: var(--fs-xs);
@@ -209,8 +160,6 @@
   letter-spacing: 0;
   margin-top: var(--space-2xs);
 }
-
-/* Input / Select / Textarea */
 .form-input,
 .form-select,
 .form-textarea {
@@ -224,12 +173,10 @@
   border-radius: var(--radius-md);
   transition: var(--transition-all);
 }
-
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: #999;
 }
-
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
@@ -238,7 +185,6 @@
   background-color: var(--color-white);
   box-shadow: 0 0 0 3px rgba(168, 36, 24, 0.1);
 }
-
 .form-select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
@@ -247,47 +193,35 @@
   padding-right: 2.5em;
   cursor: pointer;
 }
-
 .form-textarea {
   resize: vertical;
   min-height: 120px;
 }
-
-/* Submit area */
 .contact-form__submit {
   margin-top: var(--space-lg);
   display: flex;
   align-items: center;
   gap: var(--space-md);
 }
-
 .contact-form__note {
   font-size: var(--fs-xs);
   color: var(--color-text-secondary);
   line-height: var(--lh-normal);
 }
-
 @media (max-width: 600px) {
   .contact-form__submit {
     flex-direction: column;
     align-items: stretch;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════════════════════════
-   SUCCESS MESSAGE
-   ══════════════════════════════════════════════════════════════════════════ */
 .form-success {
   display: none;
   text-align: center;
   padding: var(--space-2xl) var(--space-lg);
 }
-
 .form-success--visible {
   display: block;
 }
-
 .form-success__icon {
   width: 64px;
   height: 64px;
@@ -299,12 +233,10 @@
   justify-content: center;
   margin: 0 auto var(--space-lg);
 }
-
 .form-success__icon svg {
   width: 32px;
   height: 32px;
 }
-
 .form-success__title {
   font-family: var(--font-heading);
   font-size: var(--fs-xl);
@@ -314,7 +246,6 @@
   color: var(--color-charcoal);
   margin-bottom: var(--space-sm);
 }
-
 .form-success__text {
   font-size: var(--fs-base);
   color: var(--color-text-secondary);
@@ -322,17 +253,12 @@
   max-width: 400px;
   margin: 0 auto var(--space-xl);
 }
-
-/* ══════════════════════════════════════════════════════════════════════════
-   CONTACT CTA BANNER
-   ══════════════════════════════════════════════════════════════════════════ */
 .contact-cta {
   background: linear-gradient(135deg, var(--color-charcoal) 0%, #1a1a1a 100%);
   padding: var(--space-3xl) 0;
   position: relative;
   overflow: hidden;
 }
-
 .contact-cta::before {
   content: '';
   position: absolute;
@@ -345,7 +271,6 @@
     rgba(255, 255, 255, 0.015) 80px
   );
 }
-
 .contact-cta__inner {
   position: relative;
   z-index: 1;
@@ -356,13 +281,11 @@
   text-align: center;
   gap: var(--space-md);
 }
-
 .contact-cta__title {
   font-size: var(--fs-2xl);
   color: var(--color-cream);
   margin-bottom: 0;
 }
-
 .contact-cta__phone {
   font-family: var(--font-heading);
   font-size: var(--fs-3xl);
@@ -371,11 +294,9 @@
   letter-spacing: var(--ls-wide);
   transition: var(--transition-colors);
 }
-
 .contact-cta__phone:hover {
   color: var(--color-tan);
 }
-
 .contact-cta__subtitle {
   font-size: var(--fs-md);
   color: rgba(255, 255, 255, 0.5);

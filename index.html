@@ -3,8 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>H2 Mecanic Corp — Trusted Auto Repair in Grande Prairie, AB</title>
-  <meta name="description" content="H2 Mecanic Corp provides professional automotive repair, tire services, and vehicle inspections in Grande Prairie, Alberta. Over 15 years of trusted experience.">
+  <title>H2 Mecanic Corp | Auto Repair & Tire Shop in Grande Prairie, AB</title>
+  <meta name="description" content="H2 Mecanic Corp provides professional auto repair, tire services, and vehicle inspections in Grande Prairie, Alberta. Trusted local mechanics.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="H2 Mecanic Corp | Auto Repair & Tire Shop in Grande Prairie, AB">
+  <meta property="og:description" content="H2 Mecanic Corp provides professional auto repair, tire services, and vehicle inspections in Grande Prairie, Alberta. Trusted local mechanics.">
+  <meta property="og:image" content="https://hennaneihab-svg.github.io/H2-mecanic-corp/assets/images/logo.png">
+  <meta property="og:url" content="https://hennaneihab-svg.github.io/H2-mecanic-corp/">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,8 +24,48 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/pages/home.css">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoRepair",
+    "name": "H2 Mecanic Corp",
+    "url": "https://hennaneihab-svg.github.io/H2-mecanic-corp/",
+    "telephone": "+1-587-433-1507",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "712015 Range Road 64, Lot 1",
+      "addressLocality": "Grande Prairie",
+      "addressRegion": "AB",
+      "postalCode": "T8W 0M7",
+      "addressCountry": "CA"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 55.1486484,
+      "longitude": -118.8707658
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "10:00",
+        "closes": "17:00"
+      }
+    ],
+    "priceRange": "$$"
+  }
+  </script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="page-wrapper">
 
     <!-- ═══════════════════════════════════════════════════════════════════
@@ -34,7 +84,7 @@
         </a>
 
         <!-- Mobile Toggle -->
-        <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+        <button class="nav__toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
           <span class="nav__toggle-bar"></span>
           <span class="nav__toggle-bar"></span>
           <span class="nav__toggle-bar"></span>
@@ -468,7 +518,7 @@
             <!-- Brand -->
             <div class="footer__brand">
               <a href="index.html" class="footer__logo" aria-label="H2 Mecanic Corp — Home">
-                <img src="assets/images/logo.png" alt="H2 Mecanic Corp logo" class="footer__logo-img">
+                <img src="assets/images/logo.png" alt="H2 Mecanic Corp logo" class="footer__logo-img" loading="lazy">
                 <span class="footer__logo-text">
                   <span class="footer__logo-name">H2 Mecanic</span>
                   <span class="footer__logo-tagline">Corp</span>

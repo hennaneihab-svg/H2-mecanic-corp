@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hennaneihab-svg.github.io/H2-mecanic-corp/sitemap.xml

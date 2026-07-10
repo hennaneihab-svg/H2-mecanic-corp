@@ -1,8 +1,3 @@
-/* ==========================================================================
-   H2 MECANIC CORP — Main CSS Entry Point
-   Imports all partials in the correct cascade order.
-   ========================================================================== */
-
 @import url('variables.css');
 @import url('base.css');
 @import url('components.css');
