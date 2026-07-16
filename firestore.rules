@@ -1,0 +1,28 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Fonction utilitaire pour vérifier si l'utilisateur est un admin connecté
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 1. Slots publics : Contient uniquement date, heure et statut.
+    // Tout le monde peut lire pour afficher les créneaux grisés.
+    // Tout le monde peut créer lors d'une réservation.
+    match /public_slots/{slotId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isAuthenticated();
+    }
+
+    // 2. Rendez-vous complets : Contient les informations sensibles des clients.
+    // N'importe quel visiteur peut créer une réservation.
+    // Seul l'admin connecté peut lire, modifier ou supprimer ces documents.
+    match /appointments/{appointmentId} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+  }
+}
