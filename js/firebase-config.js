@@ -27,7 +27,17 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 /**
- * Fonction pour réserver un créneau en évitant les doublons.
+ * Helper: Adds N hours to a "HH:00" string and returns the new time string.
+ */
+function addHoursToTime(timeStr, hoursToAdd) {
+  const [hourStr, minuteStr] = timeStr.split(':');
+  const newHour = parseInt(hourStr, 10) + hoursToAdd;
+  // Format as "HH:MM" (e.g., "09:00", "14:00")
+  return `${newHour.toString().padStart(2, '0')}:${minuteStr}`;
+}
+
+/**
+ * Fonction pour réserver un créneau (ou plusieurs si duration > 1).
  * Écrit dans `public_slots` (public) et `appointments` (privé) via une transaction batch.
  * 
  * @param {Object} data - Les données du formulaire
@@ -40,46 +50,63 @@ export async function bookAppointment(data) {
     clientName, 
     clientPhone, 
     clientEmail, 
-    vehicleInfo 
+    vehicleInfo,
+    durationHours = 1 // Default to 1 hour
   } = data;
 
   try {
-    // 1. Vérification anti-doublon dans `public_slots`
+    // 1. Calculate all time slots needed based on duration
+    const requiredTimes = [];
+    for (let i = 0; i < durationHours; i++) {
+      requiredTimes.push(addHoursToTime(appointmentTime, i));
+    }
+
+    // 2. Vérification anti-doublon pour TOUS les créneaux nécessaires
     const slotsRef = collection(db, "public_slots");
     const q = query(
       slotsRef, 
       where("appointmentDate", "==", appointmentDate),
-      where("appointmentTime", "==", appointmentTime)
+      where("status", "!=", "cancelled") // Only care about active slots
     );
     const querySnapshot = await getDocs(q);
 
-    if (!querySnapshot.empty) {
-      throw new Error("Ce créneau est déjà réservé. Veuillez en choisir un autre.");
+    // Filter to see if any required time is already taken
+    const existingTimes = [];
+    querySnapshot.forEach(doc => {
+      existingTimes.push(doc.data().appointmentTime);
+    });
+
+    const conflict = requiredTimes.find(time => existingTimes.includes(time));
+    if (conflict) {
+      throw new Error(`Le créneau de ${conflict} est déjà réservé. Veuillez choisir un autre horaire ou réduire la durée.`);
     }
 
-    // 2. Création d'un Batch pour écrire dans les deux collections simultanément
+    // 3. Création d'un Batch pour écrire dans les deux collections
     const batch = writeBatch(db);
 
-    // On génère un ID unique pour lier le créneau public et les infos privées
+    // On génère un ID unique pour le rendez-vous principal
     const newDocRef = doc(collection(db, "appointments")); 
     const sharedId = newDocRef.id;
 
-    // Référence pour le slot public
-    const publicSlotRef = doc(db, "public_slots", sharedId);
-    
-    // Écriture du slot public (données non sensibles)
-    batch.set(publicSlotRef, {
-      appointmentDate,
-      appointmentTime,
-      status: "confirmed",
-      createdAt: serverTimestamp()
+    // Écriture de chaque slot public
+    requiredTimes.forEach((time, index) => {
+      // Use a composite ID for slots: appointmentId_index
+      const publicSlotRef = doc(db, "public_slots", `${sharedId}_${index}`);
+      batch.set(publicSlotRef, {
+        appointmentId: sharedId, // Link back to parent
+        appointmentDate,
+        appointmentTime: time,
+        status: "confirmed",
+        createdAt: serverTimestamp()
+      });
     });
 
-    // Écriture des détails du rendez-vous (données sensibles, protégées par Firebase Rules)
+    // Écriture des détails du rendez-vous
     batch.set(newDocRef, {
       service,
       appointmentDate,
       appointmentTime,
+      durationHours,
       clientName,
       clientPhone,
       clientEmail,
@@ -88,7 +115,7 @@ export async function bookAppointment(data) {
       createdAt: serverTimestamp()
     });
 
-    // 3. Exécution du Batch
+    // 4. Exécution du Batch
     await batch.commit();
     return { success: true, id: sharedId };
 
