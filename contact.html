@@ -429,16 +429,17 @@
         });
 
         try {
-          // Only fetch slots that are NOT cancelled (confirmed or completed)
+          // Fetch all slots for this date, then filter out cancelled ones client-side
           const q = query(
             collection(db, "public_slots"),
-            where("appointmentDate", "==", selectedDate),
-            where("status", "!=", "cancelled")
+            where("appointmentDate", "==", selectedDate)
           );
           const snapshot = await getDocs(q);
           
           snapshot.forEach(doc => {
             const data = doc.data();
+            // Skip cancelled slots — they are free again
+            if (data.status === "cancelled") return;
             const bookedTime = data.appointmentTime;
             
             // Find the option and disable it
