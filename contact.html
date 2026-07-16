@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -429,7 +429,12 @@
         });
 
         try {
-          const q = query(collection(db, "public_slots"), where("appointmentDate", "==", selectedDate));
+          // Only fetch slots that are NOT cancelled (confirmed or completed)
+          const q = query(
+            collection(db, "public_slots"),
+            where("appointmentDate", "==", selectedDate),
+            where("status", "!=", "cancelled")
+          );
           const snapshot = await getDocs(q);
           
           snapshot.forEach(doc => {
