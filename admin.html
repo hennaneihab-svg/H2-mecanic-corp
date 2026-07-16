@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – H2 Mechanic Corp</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-charcoal: #1A1A1A;
+      --color-charcoal-light: #262626;
+      --color-red: #C13030;
+      --color-red-hover: #A02828;
+      --color-cream: #F2EDE4;
+      --color-tan: #CC9048;
+      --color-tan-light: #E0AA66;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--color-charcoal);
+      color: var(--color-cream);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ────────────────────────────────────────────────── */
+    .admin-header {
+      background: var(--color-charcoal-light);
+      border-bottom: 2px solid var(--color-red);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-header__logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .admin-header__logo img {
+      height: 44px;
+    }
+    .admin-header__logo-name { 
+      font-size: 1rem; 
+      font-weight: 700; 
+      color: var(--color-cream); 
+      line-height: 1.1;
+    }
+    .admin-header__logo-sub { 
+      font-size: 0.7rem; 
+      color: var(--color-tan); 
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .admin-header__badge {
+      background: var(--color-red);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+    }
+
+    /* ─── LOGIN ────────────────────────────────────────────────── */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 73px);
+      padding: 2rem;
+    }
+
+    .login-card {
+      background: var(--color-charcoal-light);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    .login-card__icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(193,48,48,0.15);
+      border: 1.5px solid var(--color-red);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .login-card__icon svg { color: var(--color-red); width: 26px; height: 26px; }
+
+    .login-card h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-cream);
+      margin-bottom: 0.4rem;
+    }
+    .login-card p {
+      font-size: 0.85rem;
+      color: rgba(242,237,228,0.55);
+      margin-bottom: 2rem;
+    }
+
+    .login-card label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-cream);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .login-card input[type="password"] {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: var(--color-cream);
+      font-family: inherit;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      transition: border-color 0.2s;
+      margin-bottom: 0.75rem;
+    }
+    .login-card input[type="password"]:focus {
+      outline: none;
+      border-color: var(--color-red);
+    }
+
+    .login-error {
+      background: rgba(193,48,48,0.15);
+      border: 1px solid rgba(193,48,48,0.4);
+      color: #f87171;
+      font-size: 0.82rem;
+      padding: 0.6rem 0.9rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .login-error.visible { display: block; }
+
+    .btn-login {
+      width: 100%;
+      background: var(--color-red);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.9rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+    .btn-login:hover { background: var(--color-red-hover); }
+
+    /* ─── DASHBOARD ─────────────────────────────────────────────── */
+    #dashboard-screen {
+      display: none;
+      padding: 2rem;
+    }
+
+    .dashboard-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .dashboard-topbar h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-cream);
+    }
+    .dashboard-topbar p { 
+      font-size: 0.8rem; 
+      color: rgba(242,237,228,0.5); 
+      margin-top: 0.2rem;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      color: rgba(242,237,228,0.7);
+      border-radius: 8px;
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { border-color: var(--color-red); color: var(--color-red); }
+
+    /* Stats cards */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--color-charcoal-light);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .stat-card__label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(242,237,228,0.5);
+      margin-bottom: 0.5rem;
+    }
+    .stat-card__value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-cream);
+    }
+    .stat-card__value.confirmed { color: var(--color-tan); }
+    .stat-card__value.completed { color: #4ade80; }
+    .stat-card__value.cancelled { color: #f87171; }
+
+    /* Table wrapper */
+    .table-wrap {
+      background: var(--color-charcoal-light);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .table-wrap__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .table-wrap__title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-cream);
+    }
+    .table-wrap__count {
+      background: rgba(204,144,72,0.15);
+      border: 1px solid rgba(204,144,72,0.3);
+      color: var(--color-tan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+    }
+    .btn-refresh {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--color-cream);
+      border-radius: 6px;
+      padding: 0.45rem 0.9rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-refresh:hover { background: rgba(255,255,255,0.1); }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+    thead th {
+      background: rgba(255,255,255,0.04);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(242,237,228,0.45);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody td {
+      padding: 1rem;
+      font-size: 0.875rem;
+      color: rgba(242,237,228,0.85);
+      vertical-align: middle;
+    }
+    td.client-name {
+      font-weight: 600;
+      color: var(--color-cream);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+    }
+    .badge--confirmed { background: rgba(204,144,72,0.15); color: var(--color-tan); border: 1px solid rgba(204,144,72,0.3); }
+    .badge--completed { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
+    .badge--cancelled { background: rgba(248,113,113,0.12); color: #f87171; border: 1px solid rgba(248,113,113,0.25); }
+
+    .status-select {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--color-cream);
+      border-radius: 6px;
+      padding: 0.3rem 0.5rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .status-select option { background: #1A1A1A; }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: rgba(242,237,228,0.35);
+    }
+    .empty-state svg { width: 40px; height: 40px; margin-bottom: 1rem; opacity: 0.4; }
+    .empty-state p { font-size: 0.9rem; }
+
+    .loading-row td { text-align: center; color: rgba(242,237,228,0.35); font-style: italic; padding: 3rem; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="admin-header">
+    <a href="index.html" class="admin-header__logo">
+      <img src="assets/images/logo.png" alt="H2 Mechanic Corp logo">
+      <span>
+        <span class="admin-header__logo-name">H2 Mechanic</span><br>
+        <span class="admin-header__logo-sub">Corp</span>
+      </span>
+    </a>
+    <span class="admin-header__badge">Admin Panel</span>
+  </header>
+
+  <!-- ══ LOGIN SCREEN ══════════════════════════════════════════════ -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h1>Admin Access</h1>
+      <p>Enter your password to access the dashboard.</p>
+
+      <label for="admin-password">Password</label>
+      <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
+      <input type="password" id="admin-password" placeholder="••••••••" autocomplete="current-password">
+      <button class="btn-login" id="btn-login">Access Dashboard</button>
+    </div>
+  </div>
+
+  <!-- ══ DASHBOARD SCREEN ══════════════════════════════════════════ -->
+  <div id="dashboard-screen">
+    <div class="dashboard-topbar">
+      <div>
+        <h2>Appointments Dashboard</h2>
+        <p id="last-refresh-label">Loading appointments…</p>
+      </div>
+      <button class="btn-logout" id="btn-logout">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Logout
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-card__label">Total</div>
+        <div class="stat-card__value" id="stat-total">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Confirmed</div>
+        <div class="stat-card__value confirmed" id="stat-confirmed">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Completed</div>
+        <div class="stat-card__value completed" id="stat-completed">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Cancelled</div>
+        <div class="stat-card__value cancelled" id="stat-cancelled">—</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-wrap__header">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span class="table-wrap__title">All Reservations</span>
+          <span class="table-wrap__count" id="table-count">0</span>
+        </div>
+        <button class="btn-refresh" id="btn-refresh">↻ Refresh</button>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Vehicle / Notes</th>
+              <th>Status</th>
+              <th>Booked On</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-body">
+            <tr class="loading-row"><td colspan="9">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { db } from './js/firebase-config.js';
+    import {
+      collection, getDocs, doc, updateDoc,
+      query, orderBy
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+    /* ──────────────────────────────────────────────────────
+       CONFIGURATION : Changez ce mot de passe ici
+    ────────────────────────────────────────────────────── */
+    const ADMIN_PASSWORD = 'H2Admin2026!';
+
+    const SESSION_KEY = 'h2_admin_auth';
+    const loginScreen  = document.getElementById('login-screen');
+    const dashboard    = document.getElementById('dashboard-screen');
+    const loginError   = document.getElementById('login-error');
+    const passwordInput = document.getElementById('admin-password');
+
+    /* ── Auth helpers ─────────────────────────────────── */
+    function showDashboard() {
+      loginScreen.style.display = 'none';
+      dashboard.style.display   = 'block';
+      loadAppointments();
+    }
+
+    function logout() {
+      sessionStorage.removeItem(SESSION_KEY);
+      loginScreen.style.display = 'flex';
+      dashboard.style.display   = 'none';
+      passwordInput.value = '';
+    }
+
+    /* Check if already logged in this browser session */
+    if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+      showDashboard();
+    }
+
+    /* ── Login button ─────────────────────────────────── */
+    document.getElementById('btn-login').addEventListener('click', () => {
+      if (passwordInput.value === ADMIN_PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, 'true');
+        loginError.classList.remove('visible');
+        showDashboard();
+      } else {
+        loginError.classList.add('visible');
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+
+    /* Allow Enter key on password input */
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('btn-login').click();
+    });
+
+    /* ── Logout ───────────────────────────────────────── */
+    document.getElementById('btn-logout').addEventListener('click', logout);
+
+    /* ── Refresh ──────────────────────────────────────── */
+    document.getElementById('btn-refresh').addEventListener('click', loadAppointments);
+
+    /* ── Load appointments from Firestore ─────────────── */
+    async function loadAppointments() {
+      const tbody = document.getElementById('appointments-body');
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="9">Loading…</td></tr>';
+
+      try {
+        const q = query(collection(db, 'appointments'), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        const docs = [];
+        snapshot.forEach(d => docs.push({ id: d.id, ...d.data() }));
+
+        // Update stats
+        document.getElementById('stat-total').textContent     = docs.length;
+        document.getElementById('stat-confirmed').textContent  = docs.filter(d => d.status === 'confirmed').length;
+        document.getElementById('stat-completed').textContent  = docs.filter(d => d.status === 'completed').length;
+        document.getElementById('stat-cancelled').textContent  = docs.filter(d => d.status === 'cancelled').length;
+        document.getElementById('table-count').textContent     = docs.length;
+
+        const now = new Date().toLocaleString('en-CA', { timeZone: 'America/Edmonton' });
+        document.getElementById('last-refresh-label').textContent = `Last updated: ${now}`;
+
+        // Render rows
+        if (docs.length === 0) {
+          tbody.innerHTML = `
+            <tr><td colspan="9">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <p>No appointments yet.</p>
+              </div>
+            </td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = docs.map(appt => {
+          const createdAt = appt.createdAt?.toDate
+            ? appt.createdAt.toDate().toLocaleDateString('en-CA')
+            : '—';
+
+          const statusBadgeClass = {
+            confirmed: 'badge--confirmed',
+            completed: 'badge--completed',
+            cancelled: 'badge--cancelled'
+          }[appt.status] || 'badge--confirmed';
+
+          return `
+            <tr data-id="${appt.id}">
+              <td class="client-name">${appt.clientName || '—'}</td>
+              <td>${appt.clientPhone || '—'}</td>
+              <td>${appt.clientEmail || '—'}</td>
+              <td>${appt.service || '—'}</td>
+              <td>${appt.appointmentDate || '—'}</td>
+              <td>${appt.appointmentTime || '—'}</td>
+              <td style="max-width:200px;word-break:break-word;">${appt.vehicleInfo || '—'}</td>
+              <td>
+                <select class="status-select" data-id="${appt.id}" onchange="updateStatus('${appt.id}', this.value)">
+                  <option value="confirmed" ${appt.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                  <option value="completed" ${appt.status === 'completed' ? 'selected' : ''}>Completed</option>
+                  <option value="cancelled" ${appt.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                </select>
+              </td>
+              <td>${createdAt}</td>
+            </tr>`;
+        }).join('');
+
+      } catch (err) {
+        console.error('Error loading appointments:', err);
+        tbody.innerHTML = `<tr class="loading-row"><td colspan="9" style="color:#f87171;">Error loading data. Check Firestore rules.</td></tr>`;
+      }
+    }
+
+    /* ── Update status ────────────────────────────────── */
+    window.updateStatus = async (id, newStatus) => {
+      try {
+        await updateDoc(doc(db, 'appointments', id), { status: newStatus });
+        await updateDoc(doc(db, 'public_slots', id), { status: newStatus });
+        loadAppointments(); // Refresh stats
+      } catch (err) {
+        console.error('Error updating status:', err);
+        alert('Could not update status. Please check Firestore rules.');
+      }
+    };
+  </script>
+
+</body>
+</html>
