@@ -434,16 +434,19 @@
     /* ── Helper: Recreate Public Slots ────────────────── */
     // Helper used when updating an appointment's status, date, time or duration
     async function syncPublicSlots(apptId, newStatus, date, startTime, duration) {
-      // 1. Fetch old slots linked to this appointment
+      const batch = writeBatch(db);
+      
+      // 1. Fetch new-style slots linked to this appointment
       const slotsQ = query(collection(db, "public_slots"), where("appointmentId", "==", apptId));
       const oldSlots = await getDocs(slotsQ);
       
-      const batch = writeBatch(db);
-      
-      // Delete old slots
+      // Delete new-style slots
       oldSlots.forEach(docSnap => batch.delete(docSnap.ref));
       
-      // If cancelled, we just delete them to free up the time. If not, recreate new slots.
+      // 2. Also forcibly delete the old-style slot (if the appointment was created before the duration feature)
+      batch.delete(doc(db, "public_slots", apptId));
+      
+      // 3. If cancelled, we just deleted everything. If not, recreate new slots for each hour.
       if (newStatus !== 'cancelled') {
         const [hourStr, minStr] = startTime.split(':');
         for (let i = 0; i < duration; i++) {
