@@ -65,15 +65,17 @@ export async function bookAppointment(data) {
     const slotsRef = collection(db, "public_slots");
     const q = query(
       slotsRef, 
-      where("appointmentDate", "==", appointmentDate),
-      where("status", "!=", "cancelled") // Only care about active slots
+      where("appointmentDate", "==", appointmentDate)
     );
     const querySnapshot = await getDocs(q);
 
-    // Filter to see if any required time is already taken
+    // Filter to see if any required time is already taken (ignoring cancelled slots)
     const existingTimes = [];
     querySnapshot.forEach(doc => {
-      existingTimes.push(doc.data().appointmentTime);
+      const d = doc.data();
+      if (d.status !== "cancelled") {
+        existingTimes.push(d.appointmentTime);
+      }
     });
 
     const conflict = requiredTimes.find(time => existingTimes.includes(time));
