@@ -490,6 +490,27 @@
         const result = await bookAppointment(appointmentData);
 
         if (result.success) {
+          // Send email notification silently in the background
+          try {
+            const formData = new FormData();
+            formData.append("access_key", "dbbfb69e-474a-4e2c-a62a-430d5b5fed15");
+            formData.append("subject", "Nouvelle Réservation (H2 Mechanic)");
+            formData.append("Client Name", clientName);
+            formData.append("Phone", clientPhone);
+            formData.append("Email", clientEmail);
+            formData.append("Service", appointmentData.service);
+            formData.append("Date", appointmentDate);
+            formData.append("Time", appointmentTime);
+            formData.append("Vehicle/Notes", appointmentData.vehicleInfo);
+            
+            fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              body: formData
+            }).catch(err => console.error("Email notification failed:", err));
+          } catch (e) {
+            console.error(e);
+          }
+
           formContent.style.display = 'none';
           successMsg.classList.add('form-success--visible');
           successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
