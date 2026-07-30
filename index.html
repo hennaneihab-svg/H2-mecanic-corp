@@ -206,37 +206,193 @@
       <!-- ─────────────────────────────────────────────────────────────────
            PROMO BANNER: TAXI CVIP
            ───────────────────────────────────────────────────────────────── -->
-      <section class="section" style="padding: 4rem 0;">
+      <section class="section" aria-labelledby="cvip-promo-title" style="padding: 3rem 0 4rem;">
         <div class="container">
-          <div style="display: flex; flex-direction: column; background: var(--color-charcoal-light); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);" class="promo-card">
-            
-            <style>
-              .promo-card { flex-direction: column; }
-              .promo-card__img { width: 100%; height: 250px; background: url('assets/images/hero-garage.jpg') center/cover no-repeat; position: relative; }
-              .promo-card__img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--color-charcoal-light), transparent); }
-              .promo-card__content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-              @media (min-width: 768px) {
-                .promo-card { flex-direction: row; }
-                .promo-card__content { width: 55%; padding: 4rem; }
-                .promo-card__img { width: 45%; height: auto; background-position: center; }
-                .promo-card__img::after { background: linear-gradient(to right, var(--color-charcoal-light) 0%, rgba(26,26,26,0) 100%); }
+          <style>
+            .cvip-promo {
+              display: flex;
+              flex-direction: column;
+              background: var(--color-charcoal);
+              border-radius: var(--radius-xl);
+              overflow: hidden;
+              box-shadow: var(--shadow-xl);
+              border: 1px solid rgba(204, 144, 72, 0.18);
+              position: relative;
+            }
+            .cvip-promo::before {
+              content: '';
+              display: none;
+              position: absolute;
+              top: 0; left: 0;
+              width: 4px; height: 100%;
+              background: var(--color-tan);
+              border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+            }
+            .cvip-promo__content {
+              padding: 2.5rem 2rem;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+            }
+            .cvip-promo__chip {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.45rem;
+              color: var(--color-tan);
+              font-family: var(--font-body);
+              font-size: 0.72rem;
+              font-weight: 600;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              border: 1px solid rgba(204, 144, 72, 0.4);
+              border-radius: var(--radius-full);
+              padding: 0.35rem 0.9rem;
+              margin-bottom: 1.4rem;
+              width: fit-content;
+            }
+            .cvip-promo__chip-dot {
+              width: 6px; height: 6px;
+              border-radius: 50%;
+              background: var(--color-tan);
+              animation: cvip-pulse 2s ease-in-out infinite;
+            }
+            @keyframes cvip-pulse {
+              0%, 100% { opacity: 1; transform: scale(1); }
+              50% { opacity: 0.4; transform: scale(0.7); }
+            }
+            .cvip-promo__title {
+              font-family: var(--font-heading);
+              font-size: clamp(1.8rem, 4vw, 2.5rem);
+              font-weight: 700;
+              color: var(--color-cream-light);
+              line-height: var(--lh-snug);
+              letter-spacing: var(--ls-wide);
+              text-transform: uppercase;
+              margin: 0 0 0.75rem;
+            }
+            .cvip-promo__desc {
+              font-family: var(--font-body);
+              font-size: 0.95rem;
+              color: rgba(216, 192, 156, 0.65);
+              line-height: var(--lh-relaxed);
+              margin: 0 0 1.75rem;
+              max-width: 420px;
+            }
+            .cvip-promo__divider {
+              width: 40px; height: 2px;
+              background: var(--color-tan);
+              border: none;
+              margin: 0 0 1.75rem;
+              border-radius: 2px;
+            }
+            .cvip-promo__price-block {
+              display: flex;
+              align-items: baseline;
+              gap: 0.4rem;
+              margin-bottom: 2rem;
+            }
+            .cvip-promo__currency {
+              font-family: var(--font-heading);
+              font-size: 1.25rem;
+              font-weight: 700;
+              color: var(--color-tan);
+            }
+            .cvip-promo__amount {
+              font-family: var(--font-heading);
+              font-size: clamp(2.5rem, 6vw, 3.5rem);
+              font-weight: 700;
+              color: var(--color-tan);
+              line-height: 1;
+              letter-spacing: -0.02em;
+            }
+            .cvip-promo__unit {
+              font-family: var(--font-body);
+              font-size: 0.78rem;
+              color: rgba(216, 192, 156, 0.45);
+              font-weight: 500;
+              letter-spacing: 0.06em;
+              text-transform: uppercase;
+              padding-left: 0.2rem;
+            }
+            .cvip-promo__cta {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.6rem;
+              font-family: var(--font-body);
+              font-size: 0.8rem;
+              font-weight: 700;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: var(--color-cream);
+              border: 1.5px solid rgba(216, 192, 156, 0.3);
+              border-radius: var(--radius-md);
+              padding: 0.75rem 1.5rem;
+              text-decoration: none;
+              transition: var(--transition-all);
+              width: fit-content;
+              background: rgba(216, 192, 156, 0.04);
+            }
+            .cvip-promo__cta:hover {
+              background: var(--color-tan);
+              border-color: var(--color-tan);
+              color: var(--color-black);
+              transform: translateY(-1px);
+              box-shadow: 0 6px 20px rgba(204, 144, 72, 0.3);
+            }
+            .cvip-promo__cta svg {
+              transition: transform var(--duration-normal) var(--ease-out);
+            }
+            .cvip-promo__cta:hover svg {
+              transform: translateX(4px);
+            }
+            .cvip-promo__img {
+              width: 100%; height: 240px;
+              position: relative; overflow: hidden;
+              flex-shrink: 0;
+            }
+            .cvip-promo__img img {
+              width: 100%; height: 100%;
+              object-fit: cover; object-position: center 30%;
+              display: block;
+              filter: brightness(0.78) contrast(1.05);
+            }
+            .cvip-promo__img::after {
+              content: '';
+              position: absolute; inset: 0;
+              background: linear-gradient(to top, var(--color-charcoal) 0%, rgba(36, 36, 36, 0) 55%);
+            }
+            @media (min-width: 768px) {
+              .cvip-promo { flex-direction: row; }
+              .cvip-promo::before { display: block; }
+              .cvip-promo__content { width: 58%; padding: 3.5rem 3rem 3.5rem 3.5rem; }
+              .cvip-promo__img { width: 42%; height: auto; }
+              .cvip-promo__img::after {
+                background: linear-gradient(to right, var(--color-charcoal) 0%, rgba(36, 36, 36, 0) 50%);
               }
-            </style>
-
-            <div class="promo-card__content">
-              <div style="background: rgba(204, 144, 72, 0.15); color: var(--color-tan); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid rgba(204, 144, 72, 0.3); margin-bottom: 1.5rem; display: inline-flex; align-items: center;">
-                Twice a Year — October & April
+            }
+          </style>
+          <div class="cvip-promo">
+            <div class="cvip-promo__content">
+              <div class="cvip-promo__chip">
+                <span class="cvip-promo__chip-dot" aria-hidden="true"></span>
+                October &amp; April &mdash; Twice a Year
               </div>
-              <h2 style="font-size: 2.25rem; font-weight: 700; color: var(--color-cream); margin-bottom: 0.5rem; line-height: 1.2;">Taxi Safety CVIP Inspection</h2>
-              <p style="font-size: 1.1rem; color: rgba(242, 237, 228, 0.7); margin-bottom: 1.5rem; max-width: 500px;">
-                Mandatory CVIP safety inspection for taxi vehicles, ensuring compliance with provincial regulations.
-              </p>
-              <div style="font-size: 2.75rem; font-weight: 800; color: var(--color-tan); margin-bottom: 2rem;">$150</div>
-              <a href="contact.html" class="btn btn--outline">Book Your Inspection</a>
+              <h2 class="cvip-promo__title" id="cvip-promo-title">Taxi Safety<br>CVIP Inspection</h2>
+              <p class="cvip-promo__desc">Mandatory Commercial Vehicle Inspection Program certification for taxi operators &mdash; keeping your licence valid and your passengers safe.</p>
+              <hr class="cvip-promo__divider" aria-hidden="true">
+              <div class="cvip-promo__price-block">
+                <span class="cvip-promo__currency">$</span>
+                <span class="cvip-promo__amount">150</span>
+                <span class="cvip-promo__unit">CAD / vehicle</span>
+              </div>
+              <a href="contact.html" class="cvip-promo__cta">
+                Book Your Inspection
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
             </div>
-
-            <div class="promo-card__img" role="img" aria-label="Technician performing a vehicle inspection"></div>
-            
+            <div class="cvip-promo__img">
+              <img src="assets/images/hero-garage.jpg" alt="Technician performing a CVIP vehicle inspection in the H2 Mechanic Corp garage" loading="lazy">
+            </div>
           </div>
         </div>
       </section>
